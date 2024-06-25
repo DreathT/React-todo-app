@@ -1,0 +1,28 @@
+.todo-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-card {
+    margin-bottom: 20px;
+}
+
+.todo-card .ant-input,
+.todo-card .ant-picker {
+    width: calc(100% - 120px);
+}
+
+.todo-card .ant-picker {
+    margin-right: 10px;
+}
+
+.todo-card .ant-btn {
+    width: 100%;
+}
+
+.todo-card .ant-list-item {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    /* Add cursor pointer to list items */
+}

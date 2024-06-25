@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import {Routes, Route, React, BrowserRouter} from 'react-router-dom';
+import ToDos from "./pages/home/todos";
+import Calendar from "./pages/home/calendar";
+import Login from "./pages/auth/login";
+import Profile from "./pages/home/profile";
+import './pages/auth/login.css';
+import 'antd/dist/reset.css';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <> 
+      {/* <nav>
+        <NavLink to="/todos"> To-Do's </NavLink>
+        <NavLink to="/Calendar"> Calendar </NavLink>
+        <NavLink to="/profile"> Profile </NavLink>
+      </nav> */}
+
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ToDos />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/login" element={<Login/>} />
+      </Routes>
+    </BrowserRouter>
+    </>
   );
 }
 
