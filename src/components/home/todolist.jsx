@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { Input, Button, List, DatePicker, Card, Checkbox, Modal, TimePicker } from 'antd';
+import { Input, Button, List, DatePicker, Card, Checkbox, Modal, TimePicker, Tag } from 'antd';
 import { TodoContext } from './todocontext';
 import './todolist.css';
+import moment from 'moment';
 
 const TodoList = () => {
   const [input, setInput] = useState('');
@@ -44,6 +45,10 @@ const TodoList = () => {
       removeTodo(selectedTodo.task);
       setIsModalVisible(false);
     }
+  };
+
+  const isToday = (date) => {
+    return moment(date).isSame(moment(), 'day');
   };
 
   return (
@@ -108,10 +113,15 @@ const TodoList = () => {
             dataSource={todayTodos}
             renderItem={item => (
               <List.Item onClick={() => showModal(item)}>
-                {item.task} - <span style={{ color: 'gray' }}>{item.date}</span>
-                {item.endDate && <> to <span style={{ color: 'gray' }}>{item.endDate}</span></>}
-                {item.startTime && <> from <span style={{ color: 'gray' }}>{item.startTime}</span></>}
-                {item.endTime && <> to <span style={{ color: 'gray' }}>{item.endTime}</span></>}
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                  <span>
+                    {item.task} - <span style={{ color: 'gray' }}>{item.date}</span>
+                    {item.endDate && <> to <span style={{ color: 'gray' }}>{item.endDate}</span></>}
+                    {item.startTime && <> from <span style={{ color: 'gray' }}>{item.startTime}</span></>}
+                    {item.endTime && <> to <span style={{ color: 'gray' }}>{item.endTime}</span></>}
+                  </span>
+                  <Tag color="red">Zorunlu</Tag>
+                </div>
               </List.Item>
             )}
           />
@@ -123,10 +133,12 @@ const TodoList = () => {
           dataSource={todos}
           renderItem={item => (
             <List.Item onClick={() => showModal(item)}>
-              {item.task} - <span style={{ color: 'gray' }}>{item.date}</span>
-              {item.endDate && <> to <span style={{ color: 'gray' }}>{item.endDate}</span></>}
-              {item.startTime && <> from <span style={{ color: 'gray' }}>{item.startTime}</span></>}
-              {item.endTime && <> to <span style={{ color: 'gray' }}>{item.endTime}</span></>}
+              <span>
+                {item.task} - <span style={{ color: 'gray' }}>{item.date}</span>
+                {item.endDate && <> to <span style={{ color: 'gray' }}>{item.endDate}</span></>}
+                {item.startTime && <> from <span style={{ color: 'gray' }}>{item.startTime}</span></>}
+                {item.endTime && <> to <span style={{ color: 'gray' }}>{item.endTime}</span></>}
+              </span>
             </List.Item>
           )}
         />
@@ -152,6 +164,7 @@ const TodoList = () => {
             {selectedTodo.endDate && <p><strong>End Date:</strong> {selectedTodo.endDate}</p>}
             {selectedTodo.startTime && <p><strong>Start Time:</strong> {selectedTodo.startTime}</p>}
             {selectedTodo.endTime && <p><strong>End Time:</strong> {selectedTodo.endTime}</p>}
+            {isToday(selectedTodo.date) && <Tag color="red">Zorunlu</Tag>}
           </div>
         )}
       </Modal>
